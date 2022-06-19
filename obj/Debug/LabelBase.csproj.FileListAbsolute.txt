@@ -1,0 +1,16 @@
+D:\Project\COMMUNISM\LabelBase\bin\Debug\LabelBase.exe.config
+D:\Project\COMMUNISM\LabelBase\bin\Debug\LabelBase.exe
+D:\Project\COMMUNISM\LabelBase\bin\Debug\LabelBase.pdb
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.csproj.AssemblyReference.cache
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.csproj.SuggestedBindingRedirects.cache
+D:\Project\COMMUNISM\LabelBase\obj\Debug\MainWindow.g.cs
+D:\Project\COMMUNISM\LabelBase\obj\Debug\App.g.cs
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase_MarkupCompile.cache
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase_MarkupCompile.lref
+D:\Project\COMMUNISM\LabelBase\obj\Debug\MainWindow.baml
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.g.resources
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.Properties.Resources.resources
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.csproj.GenerateResource.cache
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.csproj.CoreCompileInputs.cache
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.exe
+D:\Project\COMMUNISM\LabelBase\obj\Debug\LabelBase.pdb

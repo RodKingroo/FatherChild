@@ -1,0 +1,115 @@
+﻿<Window x:Class="LabelBase.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LabelBase"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Save">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Save" Margin="100" Height="50" Command="{Binding SaveButton}"/>
+                    <Button Grid.Column="1" Content="Load" Margin="100" Height="50" Command="{Binding LoadButton}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Child">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Margin="5,5,5,50" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Height="25" Margin="5" Text="{Binding ElementName=ChildGrid, Path=Columns[0].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Height="25" Margin="5" Text="{Binding ElementName=ChildGrid, Path=Columns[1].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Height="25" Margin="5" Text="{Binding ElementName=ChildGrid, Path=Columns[2].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Height="25" Margin="5" Text="{Binding ElementName=ChildGrid, Path=Columns[3].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="0" Height="25" Text="{Binding SelectedChildren.ChildID}" Margin="5"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Height="25" Text="{Binding SelectedChildren.Firstname}" Margin="5"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Height="25" Text="{Binding SelectedChildren.Secondname}" Margin="5"/>
+                        <ComboBox Grid.Column="1" Grid.Row="3" Height="25" ItemsSource="{Binding Fathers}" SelectedItem="{Binding SelectedChildren.Father}" Margin="5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Firstname"/>
+                                                <Binding Path="Secondname"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <DataGrid Name="ChildGrid" Grid.Column="1" Margin="0,10,10,10" AutoGenerateColumns="False" ItemsSource="{Binding Children}" SelectedItem="{Binding SelectedChildren}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="auto" Header="ID" Binding="{Binding ChildID}"/>
+                            <DataGridTextColumn Width="auto" Header="Firstname" Binding="{Binding Firstname}"/>
+                            <DataGridTextColumn Width="auto" Header="Secondname" Binding="{Binding Secondname}"/>
+                            <DataGridTextColumn Width="auto" Header="Father" Binding="{Binding Father.FatherID}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="25" Margin="10,0,10,20" Content="Add Child" Command="{Binding AddChildButton}" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Father">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Margin="5,5,5,50" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Height="25" Margin="5" Text="{Binding ElementName=FatherGrid, Path=Columns[0].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Height="25" Margin="5" Text="{Binding ElementName=FatherGrid, Path=Columns[1].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Height="25" Margin="5" Text="{Binding ElementName=FatherGrid, Path=Columns[2].Header, StringFormat={}{0}: }" TextAlignment="Right"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="0" Height="25" Text="{Binding SelectedFathers.FatherID}" Margin="5"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Height="25" Text="{Binding SelectedFathers.Firstname}" Margin="5"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Height="25" Text="{Binding SelectedFathers.Secondname}" Margin="5"/>
+
+                    </Grid>
+                    <DataGrid Name="FatherGrid" Grid.Column="1" Margin="0,10,10,10" AutoGenerateColumns="False" ItemsSource="{Binding Fathers}" SelectedItem="{Binding SelectedFathers}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="auto" Header="ID" Binding="{Binding FatherID}"/>
+                            <DataGridTextColumn Width="auto" Header="Firstname" Binding="{Binding Firstname}"/>
+                            <DataGridTextColumn Width="auto" Header="Secondname" Binding="{Binding Secondname}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="25" Margin="10,0,10,20" Content="Add Father" Command="{Binding AddFatherButton}" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
