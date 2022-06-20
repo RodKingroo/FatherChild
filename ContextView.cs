@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using LabelBase.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Diagnostics;
-
-using LabelBase.Models;
 
 namespace LabelBase
 {
@@ -85,7 +79,7 @@ namespace LabelBase
                     StreamWriter swChild = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}/save/child.lbs", false);
                     StreamWriter swFather = new StreamWriter($"{AppDomain.CurrentDomain.BaseDirectory}/save/father.lbs", false);
 
-                    foreach(Child item in Children)
+                    foreach (Child item in Children)
                     {
                         string sandwich = $"{item.ChildID};{item.Firstname};{item.Secondname};{item.Father.FatherID}";
                         swChild.WriteLine(sandwich);
@@ -98,7 +92,7 @@ namespace LabelBase
                     }
                     swFather.Close();
                     MessageBox.Show("Complete");
-                    
+
                 }));
             }
         }
@@ -110,39 +104,47 @@ namespace LabelBase
             {
                 return _load ?? (_load = new RelayCommand(obj =>
                 {
-                    StreamReader srChild = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}/save/child.lbs", false);
-                    StreamReader srFather = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}/save/father.lbs", false);
+                    
+                    
 
                     string lineChild, lineFather;
-
-                    while((lineFather = srFather.ReadLine()) != null)
-                    {
-                        string[] word = lineFather.Split(';');
-                        Father f = new Father();
-                        f.FatherID = int.Parse(word[0]);
-                        f.Firstname = word[1];
-                        f.Secondname = word[2];
-                        Fathers.Insert(Fathers.Count, f);
+                    using (StreamReader srFather = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}/save/father.lbs", false)) { 
+                        while ((lineFather = srFather.ReadLine()) != null)
+                        {
+                            string[] word = lineFather.Split(';');
+                            Father f = new Father();
+                            f.FatherID = int.Parse(word[0]);
+                            f.Firstname = word[1];
+                            f.Secondname = word[2];
+                            Fathers.Add(f);
+                        }
+                        srFather.Close();
                     }
-                    
-                    while((lineChild = srChild.ReadLine()) != null)
-                    {
-                        string[] word = lineChild.Split(';');
-                        Child c = new Child();
-                        c.ChildID = int.Parse(word[0]);
-                        c.Firstname = word[1];
-                        c.Secondname = word[2];
-                        //c.Father.FatherID = int.Parse(word[3]);
+                    using (StreamReader srChild = new StreamReader($"{AppDomain.CurrentDomain.BaseDirectory}/save/child.lbs", false)) { 
+                        while ((lineChild = srChild.ReadLine()) != null)
+                        {
+                            string[] word = lineChild.Split(';');
+                            Child c = new Child();
+                            c.ChildID = int.Parse(word[0]);
+                            c.Firstname = word[1];
+                            c.Secondname = word[2];
+                            foreach (Father item in Fathers)
+                            {
+                                if (item.FatherID == int.Parse(word[3])) c.Father = item;
+                            } 
 
-                        Children.Insert(Children.Count, c);
-                    }
+                            Children.Add(c);
+                        }
                     srChild.Close();
+                    }
+
                     MessageBox.Show("Complete");
                 }));
             }
         }
 
-        public ContextView(){
+        public ContextView()
+        {
 
             Fathers = new ObservableCollection<Father>();
             Children = new ObservableCollection<Child>();
